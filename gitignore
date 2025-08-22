@@ -1,0 +1,68 @@
+# ===== OS / Editor =====
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+*.iws
+out/
+.vscode/
+.project
+.classpath
+.settings/
+
+# ===== Java / Maven =====
+target/
+!**/src/**/target/
+*.log
+*.out
+*.hprof
+hs_err_pid*
+replay_pid*
+# Maven wrapper é versionado (não ignore .mvn/, mvnw e mvnw.cmd)
+
+# ===== Spring Boot config (locais/segredos) =====
+# Commit application.yml / application-dev.yml; ignore só segredos/locais
+application-*.local.yml
+application-*.secrets.yml
+application-*.local.properties
+application-*.secrets.properties
+
+# ===== Environment files =====
+.env
+.env.*
+!.env.example
+
+# ===== Test / Reports =====
+surefire-reports/
+failsafe-reports/
+jacoco.exec
+jacoco-report/
+coverage/
+
+# ===== Docker / Compose =====
+# Commit Dockerfile(s) e docker-compose.yml
+docker-compose.override*.yml
+docker/**/data/
+docker/**/volumes/
+docker/**/logs/
+**/docker/data/
+**/docker/volumes/
+**/docker/logs/
+*.tar
+
+# ===== Kubernetes / Helm (gerados/locais) =====
+k8s/dist/
+k8s/.kube/
+charts/**/charts/
+*.tgz
+
+# ===== Sonar / Scanners =====
+.scannerwork/
+
+# ===== Misc build dirs =====
+bin/
+build/
+
+# ===== (Opcional) Node / Frontend no monorepo =====
+node_modules/
+dist/

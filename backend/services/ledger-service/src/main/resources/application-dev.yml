@@ -1,0 +1,31 @@
+server:
+  port: 8084
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ledger_db
+    username: {"${POSTGRES_USER:lab}"} 
+    password: {"${POSTGRES_PASSWORD:lab}"} 
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  health:
+    probes:
+      enabled: true
+aws:
+  region: {"${AWS_REGION:us-east-1}"} 
+  s3:
+    bucket: melimbank-bucket
+  sqs:
+    queue: melimbank-transactions
+  sns:
+    topic: melimbank-events
+  dynamodb:
+    table: audit_events

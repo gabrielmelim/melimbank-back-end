@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOriginPatterns: "*"
+                allowedHeaders: "*"
+                allowedMethods: "*"
+          routes:
+            - id: customers
+              uri: http://localhost:8081
+              predicates: [ Path=/customers/** ]
+              filters: [ StripPrefix=1 ]
+            - id: accounts
+              uri: http://localhost:8082
+              predicates: [ Path=/accounts/** ]
+              filters: [ StripPrefix=1 ]
+            - id: transactions
+              uri: http://localhost:8083
+              predicates: [ Path=/transactions/** ]
+              filters: [ StripPrefix=1 ]
+            - id: ledger
+              uri: http://localhost:8084
+              predicates: [ Path=/ledger/** ]
+              filters: [ StripPrefix=1 ]
+            - id: notifications
+              uri: http://localhost:8085
+              predicates: [ Path=/notifications/** ]
+              filters: [ StripPrefix=1 ]
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true

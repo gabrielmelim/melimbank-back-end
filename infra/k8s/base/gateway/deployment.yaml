@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-service
+  namespace: melimbank
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: gateway-service }
+  template:
+    metadata:
+      labels: { app: gateway-service }
+    spec:
+      containers:
+        - name: app
+          image: gateway-service:local
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 8080 }]
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+          livenessProbe:
+            httpGet: { path: /actuator/health/liveness, port: 8080 }
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet: { path: /actuator/health/readiness, port: 8080 }
+            initialDelaySeconds: 20

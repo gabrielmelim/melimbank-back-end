@@ -1,0 +1,16 @@
+server:
+  port: 8085
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  health:
+    probes:
+      enabled: true
+aws:
+  region: {"${AWS_REGION:us-east-1}"} 
+  sns:
+    topic: melimbank-events
+  sqs:
+    queue: melimbank-transactions

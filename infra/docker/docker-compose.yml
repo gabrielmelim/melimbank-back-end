@@ -1,0 +1,41 @@
+version: "3.9"
+name: melimbank
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: pg16
+    env_file: .env
+    environment:
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: lab
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./pg-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  localstack:
+    image: localstack/localstack:3
+    container_name: localstack
+    env_file: .env
+    environment:
+      - SERVICES=s3,sqs,sns,secretsmanager,dynamodb
+      - DEBUG=1
+      - AWS_DEFAULT_REGION=${AWS_REGION}
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    ports:
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./localstack-init:/etc/localstack/init/ready.d:ro"
+
+volumes:
+  pg_data:
