@@ -1,4 +1,4 @@
-# melimbank — README (Professor Edition)
+# melimbank — doc
 
 > Guia didático e completo para subir, testar e entender o melimbank no ambiente **100% local** usando **Docker + WSL2**, **LocalStack (AWS)** e **Kubernetes (kind)**. Inclui **matriz serviço × AWS** explicando *quem usa o quê e por quê*.
 
